@@ -6,6 +6,7 @@
             <title>
                 Coffee Shop Menu
             </title>
+            <link rel="stylesheet" href="/styles.css">
         </head>
     <body>
         <h1>
