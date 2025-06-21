@@ -2,6 +2,7 @@ package com.coffeshop.menu.controller;
 
 import com.coffeshop.menu.model.Product;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private List<Product> productList = List.of(
+    private List<Product> productsList = List.of(
             new Product(1, "Espresso", 2.50),
             new Product(2, "Latte", 3.50),
             new Product(3, "Croissant", 2.00),
@@ -29,9 +30,20 @@ public class ProductController {
     @ResponseBody
     public String listProducts(){
         String productDisplay = "<strong>Product List: </strong> <hr>";
-        for(Product p: productList){
+        for(Product p: productsList){
             productDisplay += "Product: " + p.getId() + " - " + p.getName() + " - $" + p.getPrice() + "<br>";
         }
         return productDisplay;
+    }
+
+    @RequestMapping("/details/{id}") // This maps to the URL http://localhost:8080/products/details/{id}
+    @ResponseBody
+    public String getProductDetailsByID(@PathVariable int id){
+        for (Product product : productsList) {
+            if (product.getId() == id) {
+                return "<strong>Requested Product Details: </strong> <hr> Product ID: " + product.getId() + "<br> Name: " + product.getName() + "<br> Price: $" + product.getPrice();
+            }
+        }
+        return "Product not found!";
     }
 }
