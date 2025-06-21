@@ -2,6 +2,7 @@ package com.coffeshop.menu.controller;
 
 import com.coffeshop.menu.model.Product;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,12 +29,9 @@ public class ProductController {
 
     @RequestMapping("/list") //http://localhost:8080/products/list
     @ResponseBody
-    public String listProducts(){
-        String productDisplay = "<strong>Product List: </strong> <hr>";
-        for(Product p: productsList){
-            productDisplay += "Product: " + p.getId() + " - " + p.getName() + " - $" + p.getPrice() + "<br>";
-        }
-        return productDisplay;
+    public String listProducts(Model productListModel){
+        productListModel.addAttribute("products", productsList);
+        return "menu";
     }
 
     @RequestMapping("/details/{id}") // This maps to the URL http://localhost:8080/products/details/{id}
