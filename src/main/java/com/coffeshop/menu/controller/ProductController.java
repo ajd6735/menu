@@ -28,7 +28,6 @@ public class ProductController {
     }
 
     @RequestMapping("/list") //http://localhost:8080/products/list
-    @ResponseBody
     public String listProducts(Model productListModel){
         productListModel.addAttribute("products", productsList);
         return "menu";

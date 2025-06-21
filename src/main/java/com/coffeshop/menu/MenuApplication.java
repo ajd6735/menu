@@ -14,10 +14,6 @@ public class MenuApplication {
 		Product croissant = new Product(2, "Croissant", 3.49 );
 
 
-		ProductController c = new ProductController();
-		c.home();
-
-
 	}
 
 }
