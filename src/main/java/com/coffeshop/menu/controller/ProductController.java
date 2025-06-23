@@ -4,22 +4,24 @@ import com.coffeshop.menu.model.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
-    private List<Product> productsList = List.of(
+    private List<Product> productsList = new ArrayList<>(List.of(
             new Product(1, "Espresso", 2.50),
             new Product(2, "Latte", 3.50),
             new Product(3, "Croissant", 2.00),
             new Product(4, "Chocolate Muffin", 2.25),
             new Product(5, "Americano", 2.75)
-    );
+    ));
 
     @RequestMapping("/") // This maps to the URL http://localhost:8080/products/
     @ResponseBody
@@ -42,5 +44,18 @@ public class ProductController {
             }
         }
         return "Product not found!";
+    }
+
+    @RequestMapping("/add")
+    public String showProductForm(Model productAddFormModel){
+        productAddFormModel.addAttribute("product", new Product());
+        return "add-new-product";
+    }
+
+    @PostMapping("/addNewProduct")
+    public String addProduct(Product product){
+        productsList.add(product);
+        System.out.println(productsList);
+        return "redirect:/";
     }
 }
